@@ -1,6 +1,6 @@
 ---
 name: ask-via-clarify
-description: 提问行为重定向与澄清调度。当智能体准备向用户提问、征求选择、请求确认或计划使用 AskUserQuestion 工具时自动启用：禁止 AskUserQuestion 弹窗，一律改为文本「单问题 + 1~3 选项」发问；req-clarify 未激活时按场景分流（常规需求走完整澄清流程、实现阶段仅借用提问模式，不打断任务节奏）；用户明确要求开启 req-clarify 时，暂缓外层任务并以递归方式运行完整澄清流程。本 skill 自动生效，无需用户显式调用。Use when about to ask the user any question, request a choice or confirmation, or use AskUserQuestion popups.
+description: 提问行为重定向与澄清调度。当智能体准备向用户提问、征求选择、请求确认或计划使用结构化提问工具（如 Qoder 的 AskUserQuestion、omp 的 ask 工具）时自动启用：禁止结构化弹窗/选项式提问，一律改为文本「单问题 + 1~3 选项」发问；req-clarify 未激活时按场景分流（常规需求走完整澄清流程、实现阶段仅借用提问模式，不打断任务节奏）；用户明确要求开启 req-clarify 时，暂缓外层任务并以递归方式运行完整澄清流程。本 skill 自动生效，无需用户显式调用。Use when about to ask the user any question, request a choice or confirmation, or use structured question dialogs (e.g. AskUserQuestion, ask tool).
 ---
 
 # 提问重定向与澄清调度（Ask via Clarify）
@@ -9,9 +9,9 @@ description: 提问行为重定向与澄清调度。当智能体准备向用户�
 
 以下规则是**硬性约束**，优先级高于本文件中所有其他指导性描述。任何违反这些约束的行为都意味着本 skill 流程失效，必须立即回退纠正。
 
-### 约束 1：禁止 AskUserQuestion 弹窗
+### 约束 1：禁止结构化弹窗提问
 
-- **任何情况下不得调用 AskUserQuestion 工具**或任何形式的弹窗式提问工具。
+- **任何情况下不得调用结构化选项弹窗类提问工具**（Qoder 的 AskUserQuestion、omp 的 ask 工具等），或任何形式的弹窗式提问。
 - 所有提问一律以回复正文的**文本**形式呈现。
 - 用户即使口头提到"弹窗选择"等表述，也保持文本发问方式。
 
@@ -56,7 +56,7 @@ description: 提问行为重定向与澄清调度。当智能体准备向用户�
 | # | 检查项 | 通过条件 |
 |---|--------|----------|
 | 1 | 本轮是否存在提问意图？ | 否 → 正常输出；是 → 进入第 2 项 |
-| 2 | 是否已（或即将）调用 AskUserQuestion？ | 否 → 继续；是 → 改为文本发问 |
+| 2 | 是否已（或即将）调用结构化提问工具（AskUserQuestion / ask 等）？ | 否 → 继续；是 → 改为文本发问 |
 | 3 | req-clarify 状态是否已检查并按场景分流？ | 是 → 继续；否 → 回到约束 2 |
 | 4 | 本轮问题是否只有一个且附有 1~3 选项？ | 是 → 继续；否 → 精简修正 |
 | 5 | 若触发递归流程：外层任务挂起是否已声明、档案嵌套（旧档案说明/新档案建立）是否已安排？ | 是 → 继续；否 → 补全 |
@@ -65,7 +65,7 @@ description: 提问行为重定向与澄清调度。当智能体准备向用户�
 
 ## 触发场景（自动生效，无需用户显式调用）
 
-- 准备调用 AskUserQuestion 工具时（一律拦截并替换为文本发问）
+- 准备调用结构化提问工具（AskUserQuestion / ask 等）时（一律拦截并替换为文本发问）
 - 需要向用户提问、征求选择、请求确认、收集补充输入时
 - 需要澄清模糊点、决策分歧或方案取舍时
 
@@ -80,7 +80,7 @@ description: 提问行为重定向与澄清调度。当智能体准备向用户�
 
 ## 示例
 
-**错误 1——弹窗提问：** 调用 AskUserQuestion 弹出选项窗口。
+**错误 1——弹窗提问：** 调用 AskUserQuestion / ask 等结构化工具弹出选项界面。
 
 **错误 2——多问题堆砌：** "触发方式是什么？数据从哪来？UI 怎么展示？"
 
