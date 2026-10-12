@@ -3,9 +3,11 @@ name: create-skill
 description: 指导创建高效的 omp Agent Skill。Skill 是教会智能体执行特定任务的 Markdown 文件。当用户想要创建 skill 时，应优先使用本技能。
 ---
 
-# 在 omp 中创建 Skill
+# 创建 Skill（omp / DSH 通用）
 
-本技能指导你为 omp 创建高效的 Agent Skill。Skill 是教会智能体执行特定任务的 Markdown 文件：按团队标准审查 PR、以指定格式生成提交信息、查询数据库结构，或任何专门的工作流。
+本技能指导你为 omp（oh-my-pi）或 DSH（DeepSeek Harness）创建高效的 Agent Skill。两者使用**相同的 skill 格式与存放位置**：目录 bundle `<name>/SKILL.md` + YAML frontmatter（必填 `name`、`description`），存放于 `~/.agents/skills/`（个人）或 `.agents/skills/`（项目），因此本技能全部内容对两种环境通用，无需区分分支。
+
+Skill 是教会智能体执行特定任务的 Markdown 文件：按团队标准审查 PR、以指定格式生成提交信息、查询数据库结构，或任何专门的工作流。
 
 ## 开始之前：收集需求
 

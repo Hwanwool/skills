@@ -5,6 +5,13 @@ description: 当任务需要读取或操作本地应用 UI 时，通过 omp 的 
 
 # Computer Use（电脑操控）
 
+## 运行环境适配（omp / DSH）
+
+| 环境 | 行为 |
+|------|------|
+| omp | 按下文使用 omp 的 computer 工具（Eval 运行时中的 `computer` 全局对象），通过 `/computer` 或 `omp config` 开启。 |
+| DSH | ❌ **无法实现**：DSH（DeepSeek Harness）未提供 computer use 工具——没有截图、系统可访问性（AX）树、原生输入能力。在 DSH 中，若用户请求读取或操作本地应用 UI，请**明确拒绝并提示用户**：「DSH 不支持桌面 UI 操控，请改用 omp 的 computer 工具，或为目标应用寻找专门的连接器 / API / CLI」。不得用终端命令（Bash/pwsh）冒充 UI 操控。 |
+
 ## 开启方式
 
 - computer 工具默认关闭（`computer.enabled=false`）。会话内用 `/computer` 切换开启，或通过 `omp config` 设置 `computer.enabled: true` 持久开启。

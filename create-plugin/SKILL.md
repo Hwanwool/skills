@@ -5,6 +5,13 @@ description: 创建 omp 扩展包（extension）：TypeScript/JavaScript 运行�
 
 # 创建扩展（Create Plugin）
 
+## 运行环境适配（omp / DSH）
+
+| 环境 | 行为 |
+|------|------|
+| omp | 按下文创建 omp 扩展包（extension）：TS/JS 运行时工厂 + 可捆绑的 skills/commands/rules/prompts/hooks/tools/MCP。 |
+| DSH | 下文的 omp 扩展包机制（`package.json` 的 `omp.extensions` 字段、`~/.omp/agent/config.yml`、`omp plugin` 命令、`@oh-my-pi/pi-coding-agent` 的 ExtensionAPI）在 DSH 中**不适用**。DSH 有独立的原生插件机制（Cordis bundle + `plugin_manager` 的 `install_bundle`），请直接加载并使用 DSH 原生 skill **`cordis-plugin-development`** 完成插件开发，不要套用下文的 omp 扩展包结构。 |
+
 ## 是什么
 
 omp 扩展 = TS/JS 模块（运行时工厂）+ 可捆绑的声明式能力。需要可执行行为（自定义工具、斜杠命令、工具策略、UI、provider 集成）时用扩展；只需要 `SKILL.md` 时直接创建 skill，不必做扩展。

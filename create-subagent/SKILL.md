@@ -5,6 +5,13 @@ description: 创建面向特定 AI 任务的专用子代理（omp agent）。当
 
 # 创建子代理（Create Subagent）
 
+## 运行环境适配（omp / DSH）
+
+| 环境 | 行为 |
+|------|------|
+| omp | 按下文创建 omp 子代理：Markdown 文件（YAML frontmatter + 指令正文），存放于 `~/.omp/agent/agents/<name>.md` 或 `./.omp/agents/<name>.md`，由 `task` 工具委派。 |
+| DSH | 下文的 omp 子代理文件机制（`~/.omp/agent/agents/`、`omp agents unpack`、frontmatter 的 tools/spawns/model/output 字段）在 DSH 中**不适用**。DSH 的子代理通过 Cordis 组合定义：挂载 `dsh-tool-subagent`（配合 persona/toolFilter 等配置），或通过 agent preset 声明。请直接加载并使用 DSH 原生 skill **`editing-cordis-compositions`**（agent preset）与 **`cordis-plugin-development`**（bundle 安装）完成，不要套用下文的 omp 子代理文件结构。 |
+
 ## 什么是 omp 子代理
 
 omp 通过 `task` 工具把任务委派给专用子代理（worker agent）。子代理是 Markdown 文件（YAML frontmatter + 指令正文），存放位置：
